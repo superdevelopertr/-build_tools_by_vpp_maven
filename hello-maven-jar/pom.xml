@@ -73,7 +73,7 @@
 
 				<configuration>
 					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef> <!-- it adds dependencies to project -->
+						<descriptorRef>jar-with-dependencies</descriptorRef> <!-- it adds dependencies to package -->
 					</descriptorRefs>
 					<archive>
 						<manifest>
