@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	
 	<!-- PROJECT INFO -->
+	<!-- in order to use this app as library run install phase -->
+	<!-- groupid and artifactid combination should be unique -->	
 	<!-- maven version -->
 	<modelVersion>4.0.0</modelVersion>
 	

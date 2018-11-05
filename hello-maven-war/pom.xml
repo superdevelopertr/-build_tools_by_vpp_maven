@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<!-- PROJECT INFORMATION -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ailhanli</groupId>
+	<artifactId>hello-maven-war</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- packaging project as WAR -->
+	<packaging>war</packaging>
+
+    <!-- project dependecies -->
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>[3.0.3, 4.0.0)</version>
+		</dependency>
+
+		<!-- although SpringMVC declares validation as a dependency, it is set 
+			to provided scope, so it is not a transisitive dependency -->
+		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>2.3.2.RELEASE</version>
+			<scope>runtime</scope> <!-- this jar only needed at runtime -->
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>runtime</scope>  <!-- this jar only needed at runtime -->
+		</dependency>
+	</dependencies>
+	
+	<build>
+	   <plugins>
+	       <plugin>
+	           <groupId>org.apache.maven.plugins</groupId>
+	           <artifactId>maven-compiler-plugin</artifactId>
+	           <version>3.8.0</version>
+	           <configuration>
+	               <source>1.8</source>
+	               <target>1.8</target>
+	           </configuration>
+	       </plugin>
+	       <plugin>
+	           <groupId>org.apache.maven.plugins</groupId>
+	           <artifactId>maven-war-plugin</artifactId>
+	           <version>3.2.2</version>      
+	           <configuration>
+	               <warName>mymavenwebapp</warName>
+	               <outputDirectory>C:\apache-tomcat-8.5.32\webapps</outputDirectory> <!-- where to deploy -->
+	               <webResources>  <!-- this configuration is need in order to copy required configuration files from classpath to web-inf -->
+	                   <webResource>
+	                       <directory>${basedir}\src\main\resources</directory>  <!-- from -->
+	                       <targetPath>WEB-INF</targetPath> <!-- to -->
+	                       <includes>
+	                           <include>**/application.xml</include> <!-- this file is need for webapp in order to run spring app -->
+	                            <include>**/*.properties</include>  <!-- this file is need for webapp in order to get lang properties -->
+	                       </includes>
+	                   </webResource>
+	               </webResources>
+	           </configuration>
+	       </plugin>
+	   </plugins>
+	</build>
+</project>
