@@ -1,0 +1,109 @@
+<!-- these tags(xmlns:xsi) for validations inside pom -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<!-- PROJECT INFO -->
+	<!-- maven version -->
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- owner of project which is reverse to domain name -->
+	<groupId>com.ailhanli</groupId>
+	
+	<!-- name of the project -->
+	<artifactId>hello-maven-jar</artifactId>
+	
+	<!-- version or project -->
+	<version>0.0.1-SNAPSHOT</version>
+
+    <!-- PROJECT DEPENDENCIES -->
+    <!-- 
+        Here is scope variable types:
+        compile: which is default one. it means jar will used on both compile and runtime and will be located in jar file
+        test: it will only used to run test. it wont be included inside jar file
+        provided: it means this jar should be provided by it's user. we use this scope mostly for the app which deploy on app server and app server has already this jar
+        runtime: it means jar doesnt need for compile time and needed at runtime
+     -->
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>5.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>5.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope><!-- it will only used to run test. it wont be included inside jar file -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.1.2.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.23.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+    <!-- PLUGIN CONFIGURATIONS. Everything is plugin but we need to configure plugin -->
+	<build>
+		<plugins>
+		    <!-- configuration of assembly plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId> <!-- if out app hasnt any dependecies so we can use maven-jar-plugin -->
+				<version>3.1.0</version>
+
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef> <!-- it adds dependencies to project -->
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.ailhanli.SpringClient</mainClass>  <!-- it sets main class for console app -->
+						</manifest>
+					</archive>
+				</configuration>
+				<executions> <!-- it adds single goal to end of package phase -->
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- in order to disable two jar generation. the first one only has sources and we dont need this one. we only need dependencies one -->
+			<!-- we copy it from Effective POM which is combination of super pom and our pom. Our pom is extends from super POM. -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<phase>none</phase> 
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
